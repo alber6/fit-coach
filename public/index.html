@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="shortcut icon" href="./images/logoDog.png" type="image/x-icon"> -->
+    <title>Trainer CoacheAI</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💪 Trainer Coach AI</h1>
+            <p>Tu entrenador y nutricionista personal</p>
+        </header>
+        <main class="dashboard">
+            <div id="authSection" class="card">
+                <div id="loginBox">
+                    <h2>🔐 Acceso a Fit Coach</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <input type="password" id="loginPassword" placeholder="1234" required>
+                        </div>
+                        <button type="submit">Iniciar Sesión</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 15px;">
+                        ¿No tienes cuenta? <a href="#" id="linkToRegister">Regístrate aquí</a>
+                    </p>
+                </div>
+
+                <div id="registerBox" style="display: none;">
+                    <h2>📝 Crear Cuenta</h2>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="regEmail" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            <input type="password" id="regPassword" placeholder="1234" required>
+                        </div>
+                        <button type="submit">Registrarme</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 15px;">
+                        ¿Ya tienes cuenta? <a href="#" id="linkToLogin">Inicia sesión</a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div id="appSection" style="display: none;">
+                <div class="container-app">
+                    <form id="fitForm" class="card">
+                        <h3>📊 Tus Datos Biométricos</h3>
+                        <div class="grid-form">
+                            <input type="number" id="edad" placeholder="Edad" required>
+                            <input type="number" id="peso" placeholder="Peso (kg)" required>
+                            <input type="number" id="altura" placeholder="Altura (cm)" required>
+                            <input type="number" id="grasa" placeholder="% Grasa">
+                            <input type="number" id="musculo" placeholder="Masa Muscular (kg)">
+                        </div>
+
+                        <h3>🎯 Objetivos y Estilo</h3>
+                        <select id="actividad">
+                            <option value="Sedentario">Sedentario</option>
+                            <option value="Ligera">Actividad Ligera</option>
+                            <option value="Moderada">Moderada (3-5 días)</option>
+                            <option value="Intensa">Intensa (6-7 días)</option>
+                        </select>
+                        <select id="objetivo">
+                            <option value="Perder grasa">Perder grasa</option>
+                            <option value="Ganar masa muscular">Ganar masa muscular (Volumen)</option>
+                            <option value="Tonificar">Tonificar / Recomposición</option>
+                        </select>
+                        
+                        <h3>🏠 Logística de Entrenamiento</h3>
+                        <select id="lugarEntreno">
+                            <option value="Gimnasio completo">Gimnasio completo</option>
+                            <option value="Parque / Calistenia">Parque / Calistenia</option>
+                            <option value="Casa con material">Casa con material</option>
+                            <option value="Casa sin material">Casa sin material</option>
+                        </select>
+                        <select id="horaEntreno">
+                            <option value="Mañana temprano">Mañana temprano</option>
+                            <option value="Mediodía">Mediodía</option>
+                            <option value="Tarde">Tarde</option>
+                            <option value="Noche">Noche</option>
+                        </select>
+
+                        <textarea id="preferencias" placeholder="Alergias o alimentos que odias..."></textarea>
+                        <textarea id="peticionesExtra" placeholder="¿Algo más? Ej: 'Entreno 4 días', 'Soy vegetariano'"></textarea>
+                        
+                        <button type="submit" id="submitBtn">🚀 Generar Plan Maestro</button>
+                    </form>
+
+                    <div id="resultados" class="hidden">
+                        <div class="acciones-header">
+                            <button id="btnPDF" class="btn-secundario">📥 Descargar PDF para Móvil</button>
+                        </div>
+                        
+                        <div id="contenido-a-exportar">
+                            <div class="card-resultado">
+                                <h2>📋 Análisis de Composición</h2>
+                                <div class="dashboard-resumen">
+                                    <p id="res-analisis"></p>
+                                    <div class="chart-container">
+                                        <canvas id="macrosChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2>🥗 Plan Nutricional Semanal</h2>
+                            <div class="table-responsive">
+                                <table id="tabla-dieta"></table>
+                            </div>
+
+                            <h2>💪 Rutina de Entrenamiento</h2>
+                            <div class="table-responsive">
+                                <table id="tabla-entreno"></table>
+                            </div>
+                        </div>
+
+                        <!-- Panel de Modificación Interactiva (No se incluye en el PDF) -->
+                        <div class="acciones-modificacion" style="margin-top: 30px;">
+                            <button id="btnAbrirModificacion" class="btn-principal-gradiente">✍️ Modificar Plan / Registrar Progreso</button>
+                            
+                            <div id="seccionModificacion" class="card hidden" style="margin-top: 20px;">
+                                <h3>✍️ Modificar Plan o Registrar Progreso</h3>
+                                <p class="mod-descripcion" style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px;">
+                                    Cuéntanos qué quieres cambiar de tu plan actual (ej: cambiar alimentos, rutinas por lesiones, o reajustes por peso).
+                                </p>
+                                <textarea id="txtModificacion" placeholder="Ej: 'He subido de peso a 83kg y quiero reajustar mi plan', 'No me gusta la cena del miércoles, cámbiala por salmón', 'Tengo molestias en el hombro, quita press de banca'..." rows="4" style="margin-bottom: 15px;"></textarea>
+                                <div class="mod-botones" style="display: flex; gap: 15px;">
+                                    <button id="btnEnviarModificacion" style="flex: 2; padding: 12px; font-weight: bold; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white; border: none; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);">Enviar Petición a la IA 🚀</button>
+                                    <button id="btnCancelarModificacion" class="btn-secundario-v2" style="flex: 1; padding: 12px; font-weight: bold; background-color: #e1e4e8; color: #333; border: none; border-radius: 8px;">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

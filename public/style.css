@@ -1,0 +1,432 @@
+:root {
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+    --bg: #F3F4F6;
+    --text: #1F2937;
+    --card-bg: #FFFFFF;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.card, .result-card {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+}
+.row > div { flex: 1; }
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+button {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover { background-color: var(--primary-hover); }
+button:disabled { background-color: #9CA3AF; cursor: not-allowed; }
+
+.hidden { display: none; }
+
+#loader {
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 20px 0;
+}
+
+ul { padding-left: 20px; }
+
+/* Estado Inicial: Formulario centrado y bonito */
+.panel-izquierdo {
+    max-width: 600px;
+    margin: 0 auto;
+    transition: all 0.5s ease; /* Animación suave al moverse */
+}
+
+/* Estado de Resultados: Se parte en dos columnas (Solo en PC) */
+@media (min-width: 850px) {
+    .dashboard.modo-resultados {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+    
+    /* Le quitamos el centrado al formulario para que ocupe su mitad */
+    .dashboard.modo-resultados .panel-izquierdo {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+/* =========================================
+   DISEÑO PREMIUM FIT COACH APP
+========================================= */
+
+/* 1. Variables y Configuración General */
+:root {
+    --primary-color: #4facfe;
+    --secondary-color: #00f2fe;
+    --dark-bg: #1a1a2e;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-color: #e1e4e8;
+    --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: var(--text-main);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+/* 2. Contenedores y Tarjetas */
+.container-app {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card, .card-resultado {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+/* 3. Títulos */
+h2, h3 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* 4. Formulario en Grid (2 columnas) */
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 15px;
+}
+
+/* 5. Botones Premium */
+button {
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#submitBtn {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+}
+
+#submitBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+}
+
+.acciones-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.btn-secundario {
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.btn-secundario:hover {
+    background-color: #1a252f;
+}
+
+/* 6. Dashboard (Análisis + Gráfico) */
+.dashboard-resumen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+}
+
+#res-analisis {
+    flex: 1;
+    min-width: 300px;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    background: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+}
+
+.chart-container {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+/* 7. Tablas de Nivel Profesional */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    text-align: left;
+}
+
+thead {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+}
+
+th {
+    padding: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8fcfd;
+}
+
+tbody tr:hover {
+    background-color: #f1f5f9;
+    transition: background 0.2s;
+}
+
+/* Destaque del primer elemento de cada fila (El Día) */
+td:first-child {
+    font-weight: bold;
+    color: #2c3e50;
+    width: 100px;
+}
+
+/* 8. Utilidades */
+.hidden {
+    display: none !important;
+}
+
+/* 9. Responsivo (Móviles) */
+@media (max-width: 768px) {
+    .dashboard-resumen {
+        flex-direction: column;
+    }
+    .chart-container {
+        width: 100%;
+        max-width: 250px;
+    }
+    .grid-form {
+        grid-template-columns: 1fr;
+    }
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* impresión de la información en pdf */
+/* =========================================
+   REGLAS EXCLUSIVAS PARA EXPORTAR A PDF
+========================================= */
+.modo-pdf {
+    display: block !important;
+    background: white;
+    padding: 0;
+    width: 100% !important;
+}
+
+.modo-pdf .dashboard-resumen {
+    display: block !important; 
+    text-align: center;
+}
+
+.modo-pdf #res-analisis {
+    border: none;
+    background: transparent;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.modo-pdf .chart-container {
+    margin: 0 auto 30px auto !important;
+}
+
+/* 🛑 ANIQUILAMOS EL SCROLL DE LAS TABLAS */
+.modo-pdf .table-responsive {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    display: block !important;
+    box-shadow: none !important;
+    width: 100% !important;
+}
+
+.modo-pdf table {
+    width: 100% !important;
+    font-size: 11px;
+    page-break-inside: auto;
+}
+
+.modo-pdf tr {
+    page-break-inside: avoid; /* Evita que una fila se parta por la mitad */
+    page-break-after: auto;
+}
+
+/* Forzar salto de página en la rutina de entrenamiento */
+.modo-pdf h2:nth-of-type(3) {
+    page-break-before: always;
+    margin-top: 20px;
+}
+
+/* =========================================
+   ESTILOS PREMIUM PANEL MODIFICACION
+   ========================================= */
+.btn-principal-gradiente {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.btn-principal-gradiente:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+}
+
+.btn-principal-gradiente:active {
+    transform: translateY(0);
+}
+
+.btn-secundario-v2 {
+    background-color: #e1e4e8 !important;
+    color: #333 !important;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-secundario-v2:hover {
+    background-color: #d1d5db !important;
+    transform: translateY(-2px);
+}
+
+.btn-secundario-v2:active {
+    transform: translateY(0);
+}
