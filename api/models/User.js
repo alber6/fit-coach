@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     perfilFisico:{
-edad: { type: Number },
+    edad: { type: Number },
     peso: { type: Number },
     altura: { type: Number },
     actividad: { type: String },
@@ -21,7 +21,8 @@ edad: { type: Number },
     grasa: { type: Number },
     musculo: { type: Number },
     lugarEntreno: { type: String },
-    horaEntreno: { type: String }
+    horaEntreno: { type: String },
+    alimentosDisponibles: { type: String }
     },
     planActual: {
         type: mongoose.Schema.Types.Mixed,

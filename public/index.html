@@ -95,12 +95,16 @@
                         <textarea id="preferencias" placeholder="Alergias o alimentos que odias..."></textarea>
                         <textarea id="peticionesExtra" placeholder="¿Algo más? Ej: 'Entreno 4 días', 'Soy vegetariano'"></textarea>
                         
+                        <h3>🥕 Aprovechamiento de Nevera (Opcional)</h3>
+                        <textarea id="alimentosDisponibles" placeholder="Ej: Pechuga de pollo, huevos, arroz integral, aguacate, yogur griego..."></textarea>
+                        
                         <button type="submit" id="submitBtn">🚀 Generar Plan Maestro</button>
                     </form>
 
                     <div id="resultados" class="hidden">
-                        <div class="acciones-header">
+                        <div class="acciones-header" style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <button id="btnPDF" class="btn-secundario">📥 Descargar PDF para Móvil</button>
+                            <button id="btnNuevoPlan" class="btn-secundario">🔄 Crear Nuevo Plan / Cambiar Objetivo</button>
                         </div>
                         
                         <div id="contenido-a-exportar">

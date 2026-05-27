@@ -20,11 +20,7 @@ app.use(express.static('public')); // Esto expone tu carpeta public al navegador
 app.use("/api/v1/users", usersRouter);
 
 // Usamos el puerto que nos dé Render, o el 3000 si estamos en local
-// const PUERTO = process.env.PORT || 3000;
-// app.listen(PUERTO, () => {
-//     console.log(`🚀 Servidor Fit Coach activo en el puerto ${PUERTO}`);
-// });
-const PUERTO = 3000;
+const PUERTO = process.env.PORT || 3000;
 app.listen(PUERTO, () => {
-    console.log(`🚀 Servidor deportivo activo en el puerto http://localhost:${PUERTO}`);
+    console.log(`🚀 Servidor deportivo activo en http://localhost:${PUERTO}`);
 });

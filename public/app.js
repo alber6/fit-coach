@@ -119,11 +119,17 @@ async function cargarPlanActual() {
             }
         });
         const data = await response.json();
-        if (response.ok && data.planActual) {
-            renderizarPlan(data.planActual);
-        } else {
-            document.getElementById('fitForm').classList.remove('hidden');
-            document.getElementById('resultados').classList.add('hidden');
+        
+        if (response.ok) {
+            if (data.perfilFisico) {
+                precargarFormulario(data.perfilFisico);
+            }
+            if (data.planActual) {
+                renderizarPlan(data.planActual);
+            } else {
+                document.getElementById('fitForm').classList.remove('hidden');
+                document.getElementById('resultados').classList.add('hidden');
+            }
         }
     } catch (error) {
         console.error("❌ Error al cargar plan actual:", error);
@@ -149,7 +155,8 @@ document.getElementById('fitForm').addEventListener('submit', async (e) => {
         lugarEntreno: document.getElementById('lugarEntreno').value,
         horaEntreno: document.getElementById('horaEntreno').value,
         preferencias: document.getElementById('preferencias').value,
-        peticionesExtra: document.getElementById('peticionesExtra').value
+        peticionesExtra: document.getElementById('peticionesExtra').value,
+        alimentosDisponibles: document.getElementById('alimentosDisponibles').value
     };
 
     try {
@@ -329,4 +336,28 @@ btnEnviarMod.addEventListener('click', async () => {
         btnEnviarMod.innerText = "Enviar Petición a la IA 🚀";
         btnCancelarMod.disabled = false;
     }
+});
+
+// ==========================================
+// 7. LÓGICA DE CREAR NUEVO PLAN
+// ==========================================
+function precargarFormulario(perfil) {
+    if (!perfil) return;
+    if (perfil.edad) document.getElementById('edad').value = perfil.edad;
+    if (perfil.peso) document.getElementById('peso').value = perfil.peso;
+    if (perfil.altura) document.getElementById('altura').value = perfil.altura;
+    if (perfil.grasa) document.getElementById('grasa').value = perfil.grasa;
+    if (perfil.musculo) document.getElementById('musculo').value = perfil.musculo;
+    if (perfil.actividad) document.getElementById('actividad').value = perfil.actividad;
+    if (perfil.objetivo) document.getElementById('objetivo').value = perfil.objetivo;
+    if (perfil.lugarEntreno) document.getElementById('lugarEntreno').value = perfil.lugarEntreno;
+    if (perfil.horaEntreno) document.getElementById('horaEntreno').value = perfil.horaEntreno;
+    if (perfil.preferencias) document.getElementById('preferencias').value = perfil.preferencias;
+    if (perfil.peticionesExtra) document.getElementById('peticionesExtra').value = perfil.peticionesExtra;
+    if (perfil.alimentosDisponibles) document.getElementById('alimentosDisponibles').value = perfil.alimentosDisponibles;
+}
+
+document.getElementById('btnNuevoPlan').addEventListener('click', () => {
+    document.getElementById('fitForm').classList.remove('hidden');
+    document.getElementById('resultados').classList.add('hidden');
 });

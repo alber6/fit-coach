@@ -4,32 +4,34 @@ const { generateSign } = require('../../utils/jwt');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Función auxiliar con fallback para manejar caídas/saturación de la API de Gemini
+// Función auxiliar con reintentos y exponencial backoff para manejar caídas/saturación de la API de Gemini 2.5 Flash
 const generarContenidoConFallback = async (prompt) => {
     let lastError;
-    try {
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.5-flash", 
-            generationConfig: { responseMimeType: "application/json" } 
-        });
-        const result = await model.generateContent(prompt);
-        return result.response.text();
-    } catch (error) {
-        console.warn("⚠️ Falló gemini-2.5-flash, probando fallback a gemini-1.5-flash...", error.message || error);
-        lastError = error;
-    }
+    const maxRetries = 3;
+    let delay = 1000; // 1 segundo inicial
 
-    try {
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash", 
-            generationConfig: { responseMimeType: "application/json" } 
-        });
-        const result = await model.generateContent(prompt);
-        return result.response.text();
-    } catch (error) {
-        console.error("❌ Fallaron todos los modelos de Gemini:", error.message || error);
-        throw lastError || error;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            console.log(`🤖 Llamando a Gemini 2.5 Flash (Intento ${attempt}/${maxRetries})...`);
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-2.5-flash", 
+                generationConfig: { responseMimeType: "application/json" } 
+            });
+            const result = await model.generateContent(prompt);
+            return result.response.text();
+        } catch (error) {
+            console.warn(`⚠️ Intento ${attempt} fallido para gemini-2.5-flash:`, error.message || error);
+            lastError = error;
+            if (attempt < maxRetries) {
+                console.log(`⏳ Esperando ${delay}ms antes de reintentar...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                delay *= 2; // Backoff exponencial
+            }
+        }
     }
+    
+    console.error("❌ Fallaron todos los intentos de Gemini 2.5 Flash.");
+    throw lastError;
 };
 
 //registro del usuario
@@ -99,7 +101,7 @@ const login = async (req, res) => {
 // ia generar el plan del usuario
 const generarPlan = async (req, res) => {
     try {
-        const { edad, peso, altura, actividad, objetivo, preferencias, peticionesExtra, grasa, musculo, lugarEntreno, horaEntreno } = req.body;
+        const { edad, peso, altura, actividad, objetivo, preferencias, peticionesExtra, grasa, musculo, lugarEntreno, horaEntreno, alimentosDisponibles } = req.body;
 
         const prompt = `
             Eres un Entrenador Personal y Nutricionista Deportivo de Élite. 
@@ -107,7 +109,10 @@ const generarPlan = async (req, res) => {
             CONTEXTO: Entrena en ${lugarEntreno} por la ${horaEntreno}.
             OBJETIVO: ${objetivo}. 
             RESTRICCIONES: ${preferencias}.
+            ALIMENTOS EN NEVERA / DESEADOS: ${alimentosDisponibles || 'Ninguno especificado'}.
             PETICIÓN ESPECIAL: ${peticionesExtra}.
+
+            INSTRUCCIÓN DE ALIMENTOS: El usuario tiene los siguientes alimentos disponibles en su cocina o le gustaría consumirlos: ${alimentosDisponibles || 'Ninguno especificado'}. Es obligatorio que diseñes la 'tabla_dieta' priorizando el uso de estos alimentos para evitar el desperdicio. Como es una dieta semanal y es probable que falten ingredientes para cubrir todos los días, tienes total libertad para rellenar los huecos restantes con los alimentos saludables que consideres más adecuados para cumplir con sus objetivos de calorías y macronutrientes.
 
             TAREA: Diseña un plan de 7 días exactos. Ajusta la dieta según la hora de entreno (pre y post entreno).
             
@@ -176,7 +181,10 @@ const obtenerPlanActual = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "Usuario no encontrado" });
         }
-        return res.status(200).json({ planActual: user.planActual || null });
+        return res.status(200).json({ 
+            planActual: user.planActual || null,
+            perfilFisico: user.perfilFisico || null
+        });
     } catch (error) {
         console.error("❌ Error al obtener el plan actual:", error);
         return res.status(500).json({ error: "Error al recuperar el plan de la base de datos." });
