@@ -21,11 +21,6 @@ app.use(express.static(path.join(__dirname, 'public'))); // Esto expone tu carpe
 app.use("/api/v1/users", usersRouter);
 
 
-// Forzar a que cualquier ruta que no sea de la API cargue el index.html
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
 // Usamos el puerto que nos dé Render, o el 3000 si estamos en local
 const PUERTO = process.env.PORT || 3000;
 app.listen(PUERTO, () => {
