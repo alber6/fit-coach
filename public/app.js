@@ -1,6 +1,7 @@
 // ==========================================
 // 1. NAVEGACIÓN ENTRE LOGIN Y REGISTRO
 // ==========================================
+const API_URL = "https://fit-coach-3rde.onrender.com";
 document.getElementById('linkToRegister').addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('loginBox').style.display = 'none';
@@ -23,7 +24,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
     const password = document.getElementById('regPassword').value;
 
     try {
-        const response = await fetch('/api/v1/users/register', {
+        const response = await fetch(`${API_URL}/api/v1/users/register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -56,7 +57,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('loginPassword').value;
 
     try {
-        const response = await fetch('/api/v1/users/login', {
+        const response = await fetch(`${API_URL}/api/v1/users/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -112,7 +113,7 @@ async function cargarPlanActual() {
     if (!token) return;
 
     try {
-        const response = await fetch('/api/v1/users/plan', {
+        const response = await fetch(`${API_URL}/api/v1/users/plan`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -160,7 +161,7 @@ document.getElementById('fitForm').addEventListener('submit', async (e) => {
     };
 
     try {
-        const response = await fetch('/api/v1/users/generar-plan', {
+        const response = await fetch(`${API_URL}/api/v1/users/generar-plan`, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -304,7 +305,7 @@ btnEnviarMod.addEventListener('click', async () => {
     btnCancelarMod.disabled = true;
 
     try {
-        const response = await fetch('/api/v1/users/modificar-plan', {
+        const response = await fetch(`${API_URL}/api/v1/users/modificar-plan`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
